@@ -58,8 +58,8 @@ def status():
 
 @app.route("/test", methods=["POST"])
 def test():
-    print("request: " + request.__dict__)
-    print("args: " + request.args.__dict__)
+    print("request: " + str(request.__dict__))
+    print("args: " + str(request.args.__dict__))
     return "Cool thanks!"
 
 @app.route("/")
