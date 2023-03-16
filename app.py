@@ -59,12 +59,8 @@ def status():
 
 @app.route("/test", methods=["POST"])
 def test():
-    print("request: " + str(request.__dict__))
-    print("queryparams: " + str(request.args.__dict__))
     for key, value in request.form.items():
         print("  %s: %s" % (key, value))
-    print(request.form)
-    # this line prints out the form to the browser
     return "Thanks!"
 
 
@@ -116,20 +112,5 @@ def zapier_replies():
 
     # airtable.insert({ tweet })
 
-class LoggingMiddleware(object):
-    def __init__(self, app):
-        self._app = app
-
-    def __call__(self, env, resp):
-        pprint.pprint(('REQUEST', env))
-
-        def log_response(status, headers, *args):
-            pprint.pprint(('RESPONSE', status, headers))
-            return resp(status, headers, *args)
-
-        return self._app(env, log_response)
-
 if __name__ == "__main__":
-    print("Adding middleware")
-    app.wsgi_app = LoggingMiddleware(app.wsgi_app)
     app.run()
