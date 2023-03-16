@@ -10,10 +10,7 @@ from flask import Flask, request, redirect, session
 from pyairtable import Table
 import airtable as airtable
 from dotenv import load_dotenv
-import pprint
-import jsonify
 
-print("Starting up (test)...");
 load_dotenv()
 
 airtable_api_key = os.environ["AIRTABLE_API_KEY"]
