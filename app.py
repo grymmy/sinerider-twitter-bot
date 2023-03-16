@@ -61,10 +61,11 @@ def status():
 def test():
     print("request: " + str(request.__dict__))
     print("queryparams: " + str(request.args.__dict__))
-    print("form data: " + str(request.form.__dict__))
+    for key, value in request.form.items():
+        print("  %s: %s" % (key, value))
     print(request.form)
     # this line prints out the form to the browser
-    return jsonify(request.form.to_dict())
+    return "Thanks!"
 
 
 @app.route("/")
