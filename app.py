@@ -55,6 +55,11 @@ def post_tweet(payload, token):
 def status():
     return "Hello, I am online!"
 
+@app.route("/test", methods=["POST"])
+def test():
+    print(dir(request))
+    return "Cool thanks!"
+
 @app.route("/")
 def demo():
     global twitter
