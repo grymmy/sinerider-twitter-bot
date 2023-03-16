@@ -61,6 +61,7 @@ def test():
     print("request: " + str(request.__dict__))
     print("queryparams: " + str(request.args.__dict__))
     print("form data: " + str(request.form.__dict__))
+    print("json: " + str(request.get_json()))
     return "Cool thanks!"
 
 @app.route("/")
