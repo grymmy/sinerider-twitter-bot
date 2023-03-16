@@ -122,5 +122,6 @@ class LoggingMiddleware(object):
         return self._app(env, log_response)
 
 if __name__ == "__main__":
+    print("Adding middleware")
     app.wsgi_app = LoggingMiddleware(app.wsgi_app)
     app.run()
