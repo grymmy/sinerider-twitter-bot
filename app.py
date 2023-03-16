@@ -59,7 +59,8 @@ def status():
 @app.route("/test", methods=["POST"])
 def test():
     print("request: " + str(request.__dict__))
-    print("args: " + str(request.args.__dict__))
+    print("queryparams: " + str(request.args.__dict__))
+    print("form data: " + str(request.form.__dict__))
     return "Cool thanks!"
 
 @app.route("/")
