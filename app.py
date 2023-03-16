@@ -10,6 +10,7 @@ from flask import Flask, request, redirect, session
 from pyairtable import Table
 import airtable as airtable
 from dotenv import load_dotenv
+import pprint
 
 print("Starting up...");
 load_dotenv()
@@ -57,7 +58,6 @@ def status():
 
 @app.route("/test", methods=["POST"])
 def test():
-    print(request)
     return "Cool thanks!"
 
 @app.route("/")
@@ -108,5 +108,20 @@ def zapier_replies():
 
     # airtable.insert({ tweet })
 
+class LoggingMiddleware(object):
+    def __init__(self, app):
+        self._app = app
+
+    def __call__(self, env, resp):
+        errorlog = env['wsgi.errors']
+        pprint.pprint(('REQUEST', env), stream=errorlog)
+
+        def log_response(status, headers, *args):
+            pprint.pprint(('RESPONSE', status, headers), stream=errorlog)
+            return resp(status, headers, *args)
+
+        return self._app(env, log_response)
+
 if __name__ == "__main__":
+    app.wsgi_app = LoggingMiddleware(app.wsgi_app)
     app.run()
