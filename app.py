@@ -57,7 +57,7 @@ def status():
 
 @app.route("/test", methods=["POST"])
 def test():
-    print(dir(request))
+    print(request)
     return "Cool thanks!"
 
 @app.route("/")
