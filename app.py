@@ -113,11 +113,10 @@ class LoggingMiddleware(object):
         self._app = app
 
     def __call__(self, env, resp):
-        errorlog = env['wsgi.errors']
-        pprint.pprint(('REQUEST', env), stream=errorlog)
+        pprint.pprint(('REQUEST', env))
 
         def log_response(status, headers, *args):
-            pprint.pprint(('RESPONSE', status, headers), stream=errorlog)
+            pprint.pprint(('RESPONSE', status, headers))
             return resp(status, headers, *args)
 
         return self._app(env, log_response)
