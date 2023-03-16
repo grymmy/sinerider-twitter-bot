@@ -11,6 +11,7 @@ from pyairtable import Table
 import airtable as airtable
 from dotenv import load_dotenv
 import pprint
+import jsonify
 
 print("Starting up (test)...");
 load_dotenv()
@@ -61,7 +62,10 @@ def test():
     print("request: " + str(request.__dict__))
     print("queryparams: " + str(request.args.__dict__))
     print("form data: " + str(request.form.__dict__))
-    return "Cool thanks!"
+    print(request.form)
+    # this line prints out the form to the browser
+    return jsonify(request.form.to_dict())
+
 
 @app.route("/")
 def demo():
