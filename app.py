@@ -12,7 +12,7 @@ import airtable as airtable
 from dotenv import load_dotenv
 import pprint
 
-print("Starting up...");
+print("Starting up (test)...");
 load_dotenv()
 
 airtable_api_key = os.environ["AIRTABLE_API_KEY"]
