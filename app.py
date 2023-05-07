@@ -62,9 +62,11 @@ def set_config(key, value):
 def post_tweet(msg, response_tweet_id=None, media_ids=None):
     print("Posting tweet with content: %s" % (msg))
     if response_tweet_id is None:
-        return get_twitter_v20().create_tweet(text=msg, user_auth=False, media_ids=media_ids)
+        response = get_twitter_v20().create_tweet(text=msg, user_auth=False, media_ids=media_ids)
+        return response
     else:
-        return get_twitter_v20().create_tweet(text=msg, user_auth=False, in_reply_to_tweet_id=response_tweet_id, media_ids=media_ids)
+        response = get_twitter_v20().create_tweet(text=msg, user_auth=False, in_reply_to_tweet_id=response_tweet_id, media_ids=media_ids)
+        return response
 
 @app.route("/publishPuzzle", methods=["POST"])
 @login_required
@@ -216,6 +218,7 @@ def upload_media_to_twitter(media_url, file_type):
         file.flush()
         file.close()
         media = get_twitter_v11().chunked_upload(filename, file_type=file_type, additional_owners=[1614221762719367168])
+        print("Uploaded mp4 to twitter successfully! (original url: %s)" % (media_url))
         return [media.media_id_string]
     except Exception as e:
         print(e)
@@ -291,7 +294,7 @@ def do_scoring(workRow):
                 msg = random.choice(responses) % (score_data["level"], score_data["time"], score_data["charCount"])
                 post_tweet(msg, tweet_id, upload_media_to_twitter(score_data["gameplay"], "video/mp4"))
         except Exception as e:
-            print("Error posting tweet response...")
+            print("Error posting tweet response: %s" % (str(e)))
         complete_queued_work(tweet_id)
     elif attempts >= 3:
         print("Too many attempts, notifying user of error")
